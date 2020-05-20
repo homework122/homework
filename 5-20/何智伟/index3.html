@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p{
+            color: red;
+
+        }
+
+    </style>
+</head>
+<body>
+<p>1</p>
+<p>2</p>
+<p class="p">3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p id="p">7</p>
+
+
+
+
+</body>
+<script src="js/JQ.js"></script>
+<script>
+  $("P").css({"border":"3px solid red","color":"black"})
+
+  $.fn.extend({
+      min: function(a, b) { return a < b ? a : b; },
+      max: function(a, b) { return a > b ? a : b; }
+  });
+  console.log($("p").max(1,2))
+
+    $("#p").html(1000)
+    console.log($("#p").html())
+    console.log(document.getElementById("p").innerHTML)
+  $("#p").text(2000)
+  console.log($("#p").text())
+
+
+</script>
+
+</html>
