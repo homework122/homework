@@ -141,8 +141,72 @@
 
         return new _jquery(selector);
     }
-    jquery.ajax = function(){}
-    jquery.post = function(){}
+
+   function  createXmlhttp () {
+        //创建对象
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+            xmlhttp=new XMLHttpRequest();
+        }
+        else {
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        return xmlhttp;
+
+    }
+
+   function ajaxFn(obj){
+       var xmlhttp = createXmlhttp();
+
+       if (typeof obj.param =="object" ){
+           var arr=[]
+           for(var key in obj.param ){
+               arr[key] = obj.param[key]
+           }
+           console.log(arr)
+           obj.param = arr.join("&")
+       }
+
+       if(obj.method.toLowerCase()=="get" && obj.param){
+           obj.url = obj.url+'?'+obj.param;
+       }
+
+       //设置请求
+       xmlhttp.open(obj.method,obj.url,obj.async);
+
+       //接收响应回来的数据
+       xmlhttp.onreadystatechange=function() {
+           if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+               obj.success(xmlhttp.responseText);
+           }
+       }
+
+       //发起请求
+
+       if(obj.method.toLowerCase()=="post"){
+
+           xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+           xmlhttp.send(obj.param);
+       }else {
+           xmlhttp.send(null);
+       }
+   }
+
+
+
+
+    jquery.ajax = function(obj){
+        ajaxFn(obj)
+
+    }
+    jquery.post = function(obj){
+        obj.method = "post";
+        ajaxFn(obj)
+    }
+    jquery.get = function(obj){
+        obj.method = "get";
+        ajaxFn(obj)
+    }
 
     jquery.extend = function(obj){
         for (var key in obj){
