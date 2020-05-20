@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=divice-width, initial-scale=1">
+    <title>eamil</title>
+</head>
+<body>
+<textarea type="text" id="eamil" rows="10" cols="30" placeholder="请输入邮箱"></textarea><br>
+<textarea type="text" id="shouSuo" rows="2" cols="30" placeholder="搜索"></textarea><br>
+<button id="btn">提交</button><br>
+<textarea type="text" id="xianShi" rows="10" cols="30" placeholder="显示区"></textarea></div>
+<script src="js/eamil.js"></script>
+<script>
+  function $(id) {
+      return document.getElementById(id)
+  }
+  $("btn").onclick=function () {
+      var eamilvalue=$("eamil").value.split("\n");
+      var shouSuovalue=$("shouSuo").value;
+      var result=email(eamilvalue,shouSuovalue);
+      $("xianShi").innerText=result.join(",")
+  }
+</script>
+</body>
+</html>

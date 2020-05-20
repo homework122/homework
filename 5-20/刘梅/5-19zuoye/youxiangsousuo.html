@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=divice-width, initial-scale=1">
+    <title>邮箱验证及搜索显示</title>
+</head>
+<body>
+<textarea type="text" id="eamil" rows="10" cols="30" placeholder="请输入邮箱"></textarea><br>
+<textarea type="text" id="shouSuo" rows="2" cols="30" placeholder="搜索"></textarea><br>
+<button id="btn">提交</button><br>
+<textarea type="text"id="xianShi" rows="10" cols="30" placeholder="显示区"></textarea></div>
+<script>
+   var eamil=document.getElementById("eamil");
+   var shouSuo=document.getElementById("shouSuo") ;
+   var btn=document.getElementById("btn") ;
+   var xianShi=document.getElementById("xianShi");
+   function ff(a,b) {
+       var arr=[];
+       var arr2=a.split(",");
+       for(var key in arr2){
+           if(arr2[key].indexOf(b)>-1){//arr2中是否包含b这个值
+               console.log(arr2[key])
+               var age=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+               if(!age.test(arr2[key])){//a得输入是否符合age这个格式要求
+                   alert("你输入的格式不正确")
+               }else {
+                   arr.push(arr2[key]);
+               }
+
+           }
+       }
+       return arr;
+   }
+   btn.onclick=function () {
+       var a=eamil.value;
+       var b=shouSuo.value;
+           var d=ff(a,b);
+           d.sort();//按字母排序
+           xianShi.innerHTML=d;
+
+
+   }
+</script>
+</body>
+</html>
