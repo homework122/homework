@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邮件验证</title>
+</head>
+<body>
+<!--电子邮件列表-->
+<textarea  id="emailInput" cols="30" rows="10" placeholder="输入邮件"></textarea><br>
+<!--搜索字符串-->
+<input type="text" id="emailSea" placeholder="查询邮件"><button type="button" id="btnSearch">搜索</button><br>
+<!--显示结果-->
+<textarea  id="emailRes" cols="30" rows="10"  placeholder="过滤结果"></textarea>
+<!--提交按钮-->
+</body>
+<script src="js/email.js"></script>
+<script>
+
+    $("btnSearch").onclick=function () {
+        var emailArr=$("emailInput").value.split("\n");
+        var emailSea=$("emailSea").value;
+        var result = email(emailArr,emailSea);
+        $("emailRes").innerText=result.join(",");
+    }
+    function $(id) {
+        return document.getElementById(id);
+    }
+</script>
+</html>
