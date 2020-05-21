@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增删改查</title>
+    <style>
+        tbody:empty:after{
+            content: "没有数据";
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="text" placeholder="按名字搜索" v-model="searchName">
+    <table>
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item,index) in getSearchList">
+            <td>{{item.stuName}}</th>
+            <td >{{item.age}}</td>
+            <td >{{item.sex}}</td>
+            <td><button @click="updateStu(index)">修改</button><button @click="del(index)">删除</button></td>
+        </tr>
+        </tbody>
+    </table>
+    <!--添加-->
+    <input type="text" placeholder="请输入添加学生的信息" v-model="addStu">
+    <button @click="add()">添加</button>
+    <form >
+        <h2>学生信息</h2>
+        <input type="text" placeholder="姓名" v-model="updateName"><br>
+        <input type="text" placeholder="年龄" v-model="updateAge"><br>
+        <input type="text" placeholder="性别" v-model="updateSex"><br>
+        <button id="btnUpdate" @click="update">提交</button>
+    </form>
+</div>
+</body>
+<script src="js/vue.js"></script>
+<script>
+    var app =new Vue({
+        el:"#app",
+        data:{
+            stuLists:[
+                {stuName:"把数据",age:18,sex:"女"},
+                {stuName:"函数库",age:13,sex:"女"},
+                {stuName:"写的VG",age:18,sex:"女"},
+                {stuName:"对对对",age:18,sex:"女"},
+
+            ],
+            searchName:"",//搜索学生的姓名
+            addStu:"",//添加学生的信息
+            updateName:"",
+            updateAge:"",
+            updateSex:"",
+            searchArr:""
+
+        },
+        methods:{
+            del(indexs){
+                console.log(indexs);
+                this.stuLists.splice(indexs,1)
+            },
+            add(){
+                //添加信息
+//                以逗号分割的方式输入学生信息
+                var addObj = {};
+                var addArr = this.addStu.split(" ");
+                addObj.stuName=addArr[0];
+                addObj.age=addArr[1];
+                addObj.sex=addArr[2];
+                this.stuLists.push(addObj);
+
+            },
+//            修改信息
+            updateStu(index){
+//                获得学生的信息
+//                console.log("获得到的学生信息"+this.stuLists[index].stuName);
+                this.updateName = this.stuLists[index].stuName;
+                this.updateAge = this.stuLists[index].age;
+                this.updateSex = this.stuLists[index].sex;
+                document.getElementById("btnUpdate").setAttribute('data-id',index);
+                return this.stuLists[index];
+
+            },
+            update(){
+                console.log("hahha ")
+                var index = document.getElementById("btnUpdate").getAttribute("data-id");
+                this.searchArr[index].stuName = this.updateName;
+                this.searchArr[index].age = this.updateAge;
+                this.searchArr[index].sex = this.updateSex;
+                console.log(this.searchArr);
+
+            }
+
+        },
+        computed:{
+            getSearchList(){
+                var search = this.searchName;
+                this.searchArr = [];
+                for(var i=0;i<this.stuLists.length;i++){
+                    if(this.stuLists[i].stuName.indexOf(search)>=0){
+                        this.searchArr.push(this.stuLists[i]);
+
+                    }
+                }
+                return this.searchArr;
+//                return this.stuLists.filter(function (item) {
+//                    return item.stuName.indexOf(search)>=0
+//                });
+                //注该方法箭头函数不适用
+//                var resArr = [];
+//                for(var i=0;i<this.stuLists.length;i++){
+//                    if(this.stuLists[i].stuName.indexOf(search)>=0){
+//                        resArr.push(this.stuLists[i]);
+//
+//                    }
+//                }
+//                return resArr;
+            }
+        }
+
+
+    })
+</script>
+</html>

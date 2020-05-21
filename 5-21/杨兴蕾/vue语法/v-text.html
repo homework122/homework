@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-text</title>
+    <style>
+        .active {
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
+        .text-danger {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--<span v-text="msg"></span>-->
+    <!--<span>{{msg}}</span>-->
+    <!--<div v-html="xhtml"></div>-->
+    <!--<span v-show="ok">ccc</span>-->
+    <!--<span v-if="isIf">kkk</span>-->
+
+    <!--if判断-->
+    <!--<div v-if="score>=90&&score<=100">A</div>-->
+    <!--<div v-else-if="score>=80&&score<90">B</div>-->
+    <!--<div v-else-if="score>=70&&score<80">C</div>-->
+    <!--<div v-else-if="score>=60&&score<70">D</div>-->
+    <!--<div v-else>E</div>-->
+
+    <!--for循环-->
+    <!--<ul>-->
+        <!--&lt;!&ndash;<li v-for="item in stuList">&ndash;&gt;-->
+            <!--&lt;!&ndash;姓名：{{item.name}} 年龄：{{item.age}}&ndash;&gt;-->
+        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li v-for="(val,key) in stuList[0]">&ndash;&gt;-->
+            <!--&lt;!&ndash;key:{{key}},value:{{val}}&ndash;&gt;-->
+        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+
+        <!--<li v-for="(val,key,index) in stuList[0]" :key="index">-->
+           <!--{{index}} {{key}} {{val}}-->
+        <!--</li>-->
+    <!--</ul>-->
+    <!--数据绑定-->
+    <!--<img v-bind:src="imgSrc" >-->
+    <!--<div :class="{active:isActive}"></div>-->
+    <!--<div v-bind:class="[activeClass, errorClass]"></div>-->
+    <!--设置行内样式-->
+    <!--<div v-bind:style="{ color: activeColor,fontSize:fontSize+'px'}">lll</div>-->
+    <!--<div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">菜鸟教程</div>-->
+    <input type="text" placeholder="用户名" v-model="username">
+    {{username}}
+</div>
+</body>
+<script src="js/vue.js"></script>
+<script type="text/javascript">
+    //    var vm = new Vue({
+    //        el:"#app",
+    //        data:{
+    //            message:"hello vue js"
+    //        }
+    //    })
+    var vm = new Vue({
+
+        data:{
+            msg:"hello vue js",
+            xhtml:"<span>哈哈</span>",
+            ok:false,
+            isIf:false,
+            score:87,
+            stuList:[
+                {"name":"hh","age":"18"},
+                {"name":"方法","age":"12"},
+                {"name":"天天","age":"19"}
+                ],
+            imgSrc:"img/icon.png",
+            isActive:true,
+            activeClass: 'active',
+            errorClass: 'text-danger',
+            activeColor: 'green',
+            fontSize: 30,
+            username:""
+
+        }
+    }).$mount("#app")
+</script>
+</html>

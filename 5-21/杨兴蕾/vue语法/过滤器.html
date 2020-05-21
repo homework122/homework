@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过滤器</title>
+</head>
+<body>
+<div id="app">
+    <!--{{message | upperCase}}-->
+    {{date | toString}}
+</div>
+</body>
+<script src="js/vue.js"></script>
+<script >
+//    全局过滤器
+    Vue.filter("toString",function (value) {
+        var date;
+        if(typeof value =="string"){
+              date = new Date(value)
+        }else{
+            date =new Date();
+        }
+        return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+    });
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            message:"hello world",
+            date:"2020/5/23"
+        },
+        filters:{
+            upperCase:function (value) {
+                return value.toUpperCase();
+            }
+        }
+    })
+</script>
+</html>
