@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=divice-width, initial-scale=1">
+    <title>增删改查</title>
+</head>
+<body>
+<div id="app">
+    <button @click="tianjia">添加</button>
+    查询：<input type="text" v-model="stuName" placeholder="请输入姓名">
+   <div id="input" v-if="ok">
+    <input type="text" v-model="Name" placeholder="请输入姓名">
+    <br>
+    <input type="text" v-model="age" placeholder="请输入年龄">
+    <button @click="queren()">确认</button>
+   </div>
+    <table>
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item,index) in getStudentListBySearch">
+            <td>{{item.stuName}}</td>
+            <td>{{item.age}}</td>
+            <td>
+                <button @click="xiu(item)">修改</button>
+                <button @click="del(index)">删除</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var o=0;
+    var app = new Vue({
+        el: "#app",
+        data: {
+            studntList: [
+                {stuName: "张三", age: 18},
+                {stuName: "李四", age: 22},
+                {stuName: "王五", age: 25},
+                {stuName: "刘六", age: 23},
+            ],
+            stuName: '',
+            age:'',
+            Name:'',
+            ok:false
+
+        },
+        methods: {//写方法的
+            del(indexs) {
+                this.studntList.splice(indexs, 1)
+            },
+            xiu(indexs){
+                if(this.ok){
+                    this.ok=false
+                }else {
+                    this.ok=true
+                    o=indexs;//把修改传进来的值用一个变量存起来
+                    this.Name=indexs.stuName;
+                    this.age=indexs.age;
+                }
+
+            },
+            queren(){
+                if( o==0&& this.Name!=""&&this.age!=""){
+                    var obj={};
+                    obj.stuName=this.Name;
+                    obj.age=this.age;
+                    this.studntList.push(obj);
+                    this.Name="";
+                    this.age="";
+                    this.ok=false
+                    alert("添加成功")
+                }else if(this.Name!=""&&this.age!=""){
+                    o.stuName=this.Name;
+                    o.age=this.age;
+                    this.Name="";
+                    this.age="";
+                    this.ok=false
+                    alert("修改成功")
+                }
+
+            },
+            tianjia(){
+                if(this.ok){
+                    this.ok=false
+                }else {
+                    this.ok=true
+                }
+            }
+        },
+        computed: {//写计算属性
+            getStudentListBySearch() {
+                var search = this.stuName;
+                var arr = [];
+                for (var i = 0; i < this.studntList.length; i++) {
+                    if (this.studntList[i].stuName.indexOf(search) >= 0) {
+                        arr.push(this.studntList[i])
+                    }
+                }
+                return arr;
+            },
+
+
+        },
+        filters: {}
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=divice-width, initial-scale=1">
+    <title>过滤器</title>
+</head>
+<body>
+<div id="app">
+{{message|upperCase}}
+    <br>
+    {{date|todataString}}
+</div>
+<script src="js/vue.js"></script>
+<script type="text/javascript">
+    Vue.filter("todataString",function (value) {
+        var date;
+        if(typeof value=="string"){
+            date=new Date(value);
+
+        }else {
+            date=value;
+
+        }
+        return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+    });
+  var app=new Vue({
+      el:"#app",
+      data:{
+          message:"hello world",
+
+         date:new Date(),
+         //  date:"2020/02/05"
+      },
+      methods:{
+          test(){
+              alert("哈哈")
+          }
+
+
+      },
+      filters:{
+          upperCase:function (vaule) {
+              return vaule.toUpperCase();
+          }
+      }
+
+
+  })
+</script>
+</body>
+</html>

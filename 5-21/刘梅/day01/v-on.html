@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=divice-width, initial-scale=1">
+    <title>监听事件,可以添加各种修饰符</title>
+</head>
+<body>
+<div id="app">
+    <button @click="test">按钮</button>
+    <div @click.stop="test3">
+        爷爷
+        <div @click.stop="test2">
+            爸爸
+            <div @click.stop.once="test1">孩子</div>
+        </div>
+    </div>
+    <input type="text" v-model="user">
+    <div>{{user}}</div>
+    <input type="text" @keydown.left="onEnter">
+
+</div>
+<script src="js/vue.js"></script>
+<script type="text/javascript">
+var app=new Vue({
+    el:"#app",
+    data:{
+        user:""
+    },
+    methods:{//方法写在methods里面
+        test(){
+            alert("哈哈，事件触发")
+        },
+        test1(){
+            console.log("孩子");
+        },
+        test2(){
+            console.log("爸爸");
+        },
+        test3(){
+            console.log("爷爷");
+        },
+        onEnter(){
+            alert("left")
+        },
+
+
+
+    },
+
+})
+
+
+</script>
+</body>
+</html>
