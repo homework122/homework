@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        table{
+            width: 600px;
+
+        }
+        td{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p><input type="text" placeholder="请输入姓名" v-model="searchName"><button type="button" @click="add">添加</button></p>
+
+        <table border="1" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item,index) in   getStudent">
+                    <td>{{item.name}}</td>
+                    <td>{{item.age}}</td>
+                    <td><button type="button" @click="updata(index)">修改</button><button type="button" v-on:click="del(index)">删除</button></td>
+
+                </tr>
+            </tbody>
+
+        </table>
+        <div>
+            <button type="button" v-for="(item) in setPage" @click="page(item)">
+                {{item}}
+            </button>
+        </div>
+        <div v-show="display">
+            <p> <input type="text" v-model="updataName"></p>
+            <p> <input type="number" v-model="updataAge"></p>
+            <p><button type="button" @click="save">保存</button></p>
+        </div>
+        <div id="add"></div>
+
+
+    </div>
+
+</body>
+    <script src="js/vue.js"></script>
+    <script>
+
+        var students =[
+                {name:"张三",age:18},
+                {name:"张三1",age:18},
+                {name:"张三2",age:18},
+                {name:"张三3",age:18},
+                {name:"张三4",age:18},
+                {name:"张三5",age:18},
+                {name:"张三6",age:18},
+                {name:"张三7",age:18},
+                {name:"张三8",age:18},
+                {name:"张三9",age:18},
+            ]
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                student:students,
+                searchName:'',
+                display:false,
+                updataName:"",
+                updataAge:"",
+                index:"",
+                totalCount:0,//总数量
+                totalPage:0,//总页数
+                currentPage:1,//默认当前页为1
+                pageSize:4,//每页显示数量
+
+            },
+            methods: {
+                //删除
+                del: (index)=> {
+                   vm.$data.student.splice(index,1)
+
+                },
+                //修改
+                updata:(index)=>{
+                    vm.$data.display=true;
+                    vm.$data.updataName = vm.$data.student[index].name;
+                    vm.$data.updataAge = vm.$data.student[index].age;
+                    vm.$data.index=index;
+
+                },
+                //保存
+                save:()=>{
+                    vm.$data.display=false;
+                    if(typeof vm.$data.index != "undefined"){
+                        vm.$data.student[ vm.$data.index].name=  vm.$data.updataName ;
+                        vm.$data.student[ vm.$data.index].age=vm.$data.updataAge;
+                    }else {
+                        vm.$data.student.push({name:vm.$data.updataName,age:vm.$data.updataAge})
+                    }
+                    vm.$data.updataName="";
+                    vm.$data.updataAge="";
+
+                },
+                //添加
+                add:()=>{
+                    vm.$data.display=true;
+
+                },
+                //页码点击事件
+                page:function (index) {
+
+                    vm.$data.currentPage = index;
+                    console.log(vm.$data.currentPage)
+                }
+
+
+
+            },
+            computed: {
+                //数据的显示
+                getStudent:function () {
+                    var num=0;
+                    var newArr=[];
+                    var sname = this.searchName;
+                    var data = this.student.filter(function (item) {
+                        if (item.name.indexOf(sname)>-1){
+                            num++
+                        }
+                        return item.name.indexOf(sname)>-1
+                    });
+                    //页面总数
+                    this.$data.totalCount=num;
+                    //显示当前页数据
+                    var start =(this.$data.currentPage-1)*this.$data.pageSize;
+                    //每页显示的数据
+                    var end = this.$data.currentPage*this.$data.pageSize;
+                    if (end>data.length){
+                        end = data.length
+                        console.log(end)
+                    }
+                    //循环
+                    for (var i=start;i<end;i++){
+                            newArr.push(data[i])
+                    }
+                    return  newArr
+
+                },
+                //显示页码
+                setPage:function () {
+                    this.$data.totalPage = Math.ceil(this.$data.totalCount/this.$data.pageSize)
+                    return this.$data.totalPage;
+                    
+                },
+            }
+        })
+
+
+
+    </script>
+</html>
