@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <div @click="test2">
+        爷爷
+    <div @click="test1">
+        巴巴
+        <div @click.stop.once="test">
+           孙子
+        </div>
+    </div>
+    </div>
+</div>
+
+<script src="js/vue.js"></script>
+<script type="text/javascript">
+   var app = new Vue({
+       el:'#app',
+       data:{
+
+       },
+       methods:{
+           test(event) {
+               var e = window.event||arguments[0]
+               alert('孩子')
+           }, test1(event) {
+               var e = window.event||arguments[0]
+               alert('把把')
+           }, test2(event) {
+               var e = window.event||arguments[0]
+               alert('爷爷')
+           }
+       }
+   })
+</script>
+
+</body>
+</html>

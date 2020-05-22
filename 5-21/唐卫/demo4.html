@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">{{date | toDateString}}</div>
+
+<script src="js/vue.js"></script>
+<script type="text/javascript">
+    Vue.filter('toDateString',function (value) {
+        var date
+        if(typeof value=='string'){
+            date = new Date(value)
+        }else{date=value}
+        return date.getFullYear()+"-"+(date.getMonth()+1+'-'+date.getDate())
+    })
+
+    var app = new Vue({
+        el:'#app',
+        data:{
+        message:'hello,word',
+            date:new Date()
+        },
+        methods:{
+            test(event) {
+                var e = window.event||arguments[0]
+                alert('孩子')
+            }, test1(event) {
+                var e = window.event||arguments[0]
+                alert('把把')
+            }, test2(event) {
+                var e = window.event||arguments[0]
+                alert('爷爷')
+            }
+        },
+        filters:{
+            upperCase(value) {
+                return value.toUpperCase()
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

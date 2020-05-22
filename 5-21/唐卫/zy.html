@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        tbody:empty:after {
+            content: '没有找到';
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="searchName">
+    <table>
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item,index) in getStuListBySearch ">
+            <td>{{item.stuName}}</td>
+            <td>{{item.age}}</td>
+            <td><span @click="edit(stuList)">修改</span> <span @click="del(index)">删除</span> </td>
+        </tr>
+        </tbody>
+        <tr>
+            <td><input type="text"  v-model="rowtemplate.stuName" /></td>
+            <td><input type="text"  v-model="rowtemplate.age" /></td>
+            <td><button type="button" class="btn btn-primary" v-on:click="save">添加</button></td>
+        </tr>
+    </table>
+</div>
+<script src="js/vue.js"></script>
+<script type="text/javascript">
+
+    var app = new Vue({
+        el:'#app',
+        data:{
+            stuList:[
+                {stuName:'小牧',age:22},
+                { stuName:'小hai',age:32},
+                { stuName:'小米',age:12}
+            ],searchName:'',
+            rowtemplate: {stuName: '', age: ''}
+        },
+        methods:{
+            del(index) {
+               this.stuList.splice(index,1)
+            },
+            save: function (event) {
+                    this.stuList.push(this.rowtemplate);
+
+                this. rowtemplate={ stuName: '', age: ''}
+            },
+            edit: function (obj) {
+                this.rowtemplate = obj;
+            }
+        },computed:{
+//            getStuListBySearch(){
+//                var search =this.searchName;
+//                var arr =[];
+//                for(var i=0;i<this.stuList.length;i++){
+//                    if(this.stuList[i].stuName.indexOf(search)>=0){
+//                        arr.push(this.stuList[i])
+//                    }
+//                }
+//                return arr
+//            },
+            getStuListBySearch(){
+                var search=this.searchName
+                return  this.stuList.filter(function (item) {
+                  return item.stuName.indexOf(search)>=0
+              })
+            }
+        }
+    })
+</script>
+</body>
+</html>
